@@ -5,6 +5,7 @@
         NotFound,
         Local,
         GlobalAssemblyCache,
+        NugetCache,
         Unknown
     }
 }

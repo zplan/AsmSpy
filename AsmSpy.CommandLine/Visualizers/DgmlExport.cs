@@ -15,10 +15,11 @@ namespace AsmSpy.CommandLine.Visualizers
     {
         private static readonly IReadOnlyDictionary<AssemblySource, Color> AssemblySourceColors = new Dictionary<AssemblySource, Color>()
         {
-            { AssemblySource.NotFound, Color.Red },
+            { AssemblySource.NotFound, Color.Blue },
             { AssemblySource.Local, Color.Green },
             { AssemblySource.GlobalAssemblyCache, Color.Yellow },
             { AssemblySource.Unknown, Color.Gray },
+            { AssemblySource.NugetCache, Color.Purple },
         };
 
         private string _exportFileName;
@@ -54,7 +55,6 @@ namespace AsmSpy.CommandLine.Visualizers
 
                     dgml.WriteLine(@"<?xml version=""1.0"" encoding=""utf-8""?>");
                     dgml.WriteLine(@"<DirectedGraph Title=""AsmSpy:References"" xmlns=""http://schemas.microsoft.com/vs/2009/dgml"">");
-
                     dgml.WriteLine(@"<Nodes>");
                     foreach (var assemblyReference in result.Assemblies.Values)
                     {
@@ -62,7 +62,8 @@ namespace AsmSpy.CommandLine.Visualizers
                             continue;
 
                         var label = !showVersion.HasValue() ? assemblyReference.AssemblyName.Name : $"{assemblyReference.AssemblyName.Name}&#13;{ assemblyReference.AssemblyName.Version}";
-                        dgml.WriteLine(Invariant($@"<Node Id=""{assemblyReference.AssemblyName.FullName}"" Label=""{label}"" Category=""Assembly"">"));
+                        var stroke = assemblyReference.SameAssemblyWithOtherVersionExists ? " Stroke=\"Red\" StrokeThickness=\"3\"" : string.Empty;
+                        dgml.WriteLine(Invariant($@"<Node Id=""{assemblyReference.AssemblyName.FullName}"" Label=""{label}"" Category=""Assembly""{stroke}>"));
                         dgml.WriteLine(Invariant($@"<Category Ref=""{assemblyReference.AssemblySource}"" />"));
                         dgml.WriteLine(@"</Node>");
                     }
@@ -108,6 +109,7 @@ namespace AsmSpy.CommandLine.Visualizers
                         dgml.WriteLine(@"</Style>");
                     }
 
+                    dgml.WriteLine("<Style TargetType=\"Node\" GroupLabel=\"Border: Assembly with different versions\" ValueLabel=\"Has category\"><Setter Property=\"Background\" Value=\"Red\" /></Style>");
                     dgml.WriteLine(@"</Styles>");
 
                     dgml.WriteLine(@"</DirectedGraph>");

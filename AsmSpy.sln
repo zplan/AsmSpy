@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 	ProjectSection(SolutionItems) = preProject
 		appveyor.yml = appveyor.yml
 		CreateRelease.ps1 = CreateRelease.ps1
+		AsmSpy.CommandLine\bin\Debug\example.dgml = AsmSpy.CommandLine\bin\Debug\example.dgml
 		licence.txt = licence.txt
 		README.md = README.md
 	EndProjectSection
@@ -17,7 +18,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsmSpy.CommandLine", "AsmSp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsmSpy.Core.Tests", "AsmSpy.Core.Tests\AsmSpy.Core.Tests.csproj", "{15409F39-A1AA-4B51-B61D-7EE078D5C9E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsmSpy.Core.TestLibrary", "AsmSpy.Core.TestLibrary\AsmSpy.Core.TestLibrary.csproj", "{46795A7E-46BF-44B3-B838-69EB1DB63754}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsmSpy.Core.TestLibrary", "AsmSpy.Core.TestLibrary\AsmSpy.Core.TestLibrary.csproj", "{46795A7E-46BF-44B3-B838-69EB1DB63754}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
