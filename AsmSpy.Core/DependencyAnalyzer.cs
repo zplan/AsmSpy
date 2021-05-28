@@ -49,7 +49,8 @@ namespace AsmSpy.Core
                 Assembly assembly;
                 try
                 {
-                    assembly = Assembly.ReflectionOnlyLoadFrom(fileInfo.FullName);
+                    assembly = Assembly.LoadFile(fileInfo.FullName);
+                    //assembly = Assembly.ReflectionOnlyLoadFrom(fileInfo.FullName);
                     logger.LogMessage($"File {fileInfo.Name} => {assembly.GetName().Name} {assembly.GetName().Version.ToString()}");
                 }
                 catch (Exception ex)
@@ -107,7 +108,8 @@ namespace AsmSpy.Core
             {
                 try
                 {
-                    assembly.ReflectionOnlyAssembly = Assembly.ReflectionOnlyLoad(assembly.RedirectedAssemblyName?.FullName ?? assembly.AssemblyName.FullName);
+                    assembly.ReflectionOnlyAssembly = Assembly.Load(assembly.RedirectedAssemblyName?.FullName ?? assembly.AssemblyName.FullName);
+                    //assembly.ReflectionOnlyAssembly = Assembly.ReflectionOnlyLoad(assembly.RedirectedAssemblyName?.FullName ?? assembly.AssemblyName.FullName);
                     assembly.AssemblySource = assembly.ReflectionOnlyAssembly.GlobalAssemblyCache
                         ? AssemblySource.GlobalAssemblyCache
                         : AssemblySource.Unknown;

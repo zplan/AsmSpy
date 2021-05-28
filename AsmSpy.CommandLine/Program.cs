@@ -55,7 +55,7 @@ namespace AsmSpy.CommandLine
                         .Bind(x => GetAppDomainWithBindingRedirects(configurationFile)
                             .Map(appDomain => DependencyAnalyzer.Analyze(
                                 x.FileList,
-                                appDomain,
+                                null,
                                 consoleLogger,
                                 visualizerOptions,
                                 x.RootFileName)))
@@ -144,26 +144,28 @@ namespace AsmSpy.CommandLine
             return (fileList, rootFileName);
         }
 
-        public static Result<AppDomain> GetAppDomainWithBindingRedirects(CommandOption configurationFile)
+        public static Result<bool> GetAppDomainWithBindingRedirects(CommandOption configurationFile)
         {
-            var configurationFilePath = configurationFile.Value();
-            if (!string.IsNullOrEmpty(configurationFilePath) && !File.Exists(configurationFilePath))
-            {
-                return $"Directory or file: '{configurationFilePath}' does not exist.";
-            }
+            return true;
 
-            try
-            {
-                var domaininfo = new AppDomainSetup
-                {
-                    ConfigurationFile = configurationFilePath
-                };
-                return AppDomain.CreateDomain("AppDomainWithBindingRedirects", null, domaininfo);
-            }
-            catch (Exception ex)
-            {
-                return $"Failed creating AppDomain from configuration file with message {ex.Message}";
-            }
+            ////var configurationFilePath = configurationFile.Value();
+            ////if (!string.IsNullOrEmpty(configurationFilePath) && !File.Exists(configurationFilePath))
+            ////{
+            ////    return $"Directory or file: '{configurationFilePath}' does not exist.";
+            ////}
+
+            ////try
+            ////{
+            ////    var domaininfo = new AppDomainSetup
+            ////    {
+            ////        ConfigurationFile = configurationFilePath
+            ////    };
+            ////    return AppDomain.CreateDomain("AppDomainWithBindingRedirects", null, domaininfo);
+            ////}
+            ////catch (Exception ex)
+            ////{
+            ////    return $"Failed creating AppDomain from configuration file with message {ex.Message}";
+            ////}
         }
 
         private static IDependencyVisualizer[] GetDependencyVisualizers() => new IDependencyVisualizer[]
